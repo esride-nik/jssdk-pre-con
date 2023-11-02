@@ -12,3 +12,4 @@
 1. Install ArcGIS JS `npm i @arcgis/core`
 2. Remove counter.ts, content of main.ts, style.css and images.
 3. Remove unneeded imports from html and add arcgis css
+4. Add css to style.css and add MapView in main.ts
