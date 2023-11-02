@@ -1,17 +1,13 @@
-// import { defineCustomElements as defineCalciteElements } from "@esri/calcite-components/dist/loader";
-// import { defineCustomElements as defineCodingElements } from "@arcgis/coding-components/dist/loader";
-import { defineCustomElements as defineMapElements } from "@arcgis/map-components/dist/loader";
-defineMapElements();
+import Map from '@arcgis/core/Map'
+import MapView from '@arcgis/core/views/MapView'
 
-// import "./style.css";
-// import typescriptLogo from "./typescript.svg";
-// import viteLogo from "/vite.svg";
-// import { setupCounter } from "./counter.ts";
+const map = new Map({
+  basemap: 'satellite'
+})
 
-// document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-//   <div>
-//     <arcgis-map item-id="05e015c5f0314db9a487a9b46cb37eca" />
-//   </div>
-// `;
-
-// setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
+const mapView = new MapView({
+  map: map,
+  center: [13.4, 52.5],
+  zoom: 14,
+  container: 'viewDiv'
+})

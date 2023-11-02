@@ -1,5 +1,5 @@
 {
-  "name": "jssdk-pre-con",
+  "name": "vite-test",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,8 +13,6 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "@arcgis/core": "^4.28.4",
-    "@arcgis/map-components": "^4.28.0-beta.40",
-    "@esri/calcite-components": "^1.10.0"
+    "@arcgis/core": "^4.28.3"
   }
 }
