@@ -14,18 +14,22 @@ import PointSymbol3D from "@arcgis/core/symbols/PointSymbol3D";
 import LabelSymbol3D from "@arcgis/core/symbols/LabelSymbol3D";
 import TextSymbol3DLayer from "@arcgis/core/symbols/TextSymbol3DLayer";
 import ObjectSymbol3DLayer from "@arcgis/core/symbols/ObjectSymbol3DLayer";
-
+import MeshSymbol3D from "@arcgis/core/symbols/MeshSymbol3D";
+import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
+import SceneLayer from "@arcgis/core/layers/SceneLayer";
+import PopupTemplate from "@arcgis/core/PopupTemplate";
+import ExpressionInfo from "@arcgis/core/form/ExpressionInfo";
 
 // Layers
 
+const treesUrl =
+  "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Baumkataster_Berlin/FeatureServer/0/";
 const streetsUrl =
   "https://services2.arcgis.com/cFEFS0EWrhfDeVw9/arcgis/rest/services/Berlin_Equal_Street_Names/FeatureServer";
 const districtsUrl =
   "https://services2.arcgis.com/jUpNdisbWqRpMo35/arcgis/rest/services/BerlinRBS_Ortsteile_2017/FeatureServer";
-const treesUrl =
-  "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Baumkataster_Berlin/FeatureServer/0/";
-
-
+const buildingsUrl =
+  "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Berlin/SceneServer";
 
 /********************************************************************
  * Step 1 - Add scene with basemap *
@@ -69,8 +73,6 @@ const treesLayer = new FeatureLayer({
 });
 
 map.add(treesLayer);
-
-
 
 /**************************************************
  * Step 3 - Change the streets renderer to show a 3D line *
@@ -125,11 +127,9 @@ const streetsLayer = new FeatureLayer({
 
 map.add(streetsLayer);
 
-
 /**************************************************
  * Step 4 - Add districts and 3D labels *
  **************************************************/
-
 
 const districtsLayer = new FeatureLayer({
   title: "Berlin district boundaries",
@@ -211,3 +211,64 @@ const districtsLabelLayer = new FeatureLayer({
 
 map.add(districtsLayer);
 map.add(districtsLabelLayer);
+
+/**************************************************
+ * Step 5 - Add 3D buildings with edges rendering *
+ **************************************************/
+
+const buildingSymbol = new MeshSymbol3D({
+  symbolLayers: [
+    new FillSymbol3DLayer({
+      material: {
+        color: [40, 40, 40, 0.5],
+        colorMixMode: "tint",
+      },
+      edges: new SolidEdges3D({
+        size: 0.5,
+        color: [255, 255, 255, 0.5],
+      }),
+    }),
+  ],
+});
+
+const buildingsLayer = new SceneLayer({
+  title: "Berlin 3D buildings",
+  url: buildingsUrl,
+  outFields: ["*"],
+  renderer: new SimpleRenderer({
+    symbol: buildingSymbol,
+  }),
+  legendEnabled: false,
+});
+
+map.add(buildingsLayer);
+
+/**************************************************
+ * Step 6 - Add a popup with the name & description of the street *
+ **************************************************/
+
+const arcadeExpressionInfos = [
+  {
+    name: "title",
+    title: "Name of the person the street is named after.",
+    expression: "fromJSON($feature.details).labels.en.value",
+  },
+  {
+    name: "description",
+    title: "Description of the person the street is named after.",
+    expression: "fromJSON($feature.details).descriptions.en.value",
+  },
+  {
+    name: "link",
+    title: "Link to wikipedia article.",
+    expression: "fromJSON($feature.details).sitelinks.enwiki.url",
+  },
+];
+
+streetsLayer.popupTemplate = new PopupTemplate({
+  content:
+    "<p><strong>{name}</strong></p><p>{expression/title}: {expression/description}</p><p><a href='{expression/link}'>Learn more</a></p><p>",
+  expressionInfos: arcadeExpressionInfos.map(
+    (infos) => new ExpressionInfo(infos)
+  ) as __esri.popupExpressionInfoProperties[],
+});
