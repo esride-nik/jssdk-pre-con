@@ -2,15 +2,18 @@ import Map from "@arcgis/core/Map";
 import SceneView from "@arcgis/core/views/SceneView";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
+import UniqueValueRenderer from "@arcgis/core/renderers/UniqueValueRenderer";
 import WebStyleSymbol from "@arcgis/core/symbols/WebStyleSymbol";
 
 
 // Layers
 
+const streetsUrl =
+  "https://services2.arcgis.com/cFEFS0EWrhfDeVw9/arcgis/rest/services/Berlin_Equal_Street_Names/FeatureServer";
 const treesUrl =
   "https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Baumkataster_Berlin/FeatureServer/0/";
 
-  
+
 
 /********************************************************************
  * Step 1 - Add scene with basemap *
@@ -54,3 +57,20 @@ const treesLayer = new FeatureLayer({
 });
 
 map.add(treesLayer);
+
+
+
+/**************************************************
+ * Step 3 - Add a streets layer *
+ **************************************************/
+
+const streetsLayer = new FeatureLayer({
+  title: "Berlin streets",
+  url: streetsUrl,
+  outFields: ["*"],
+  elevationInfo: {
+    mode: "on-the-ground",
+  }
+});
+
+map.add(streetsLayer);
