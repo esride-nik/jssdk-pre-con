@@ -13,6 +13,7 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "@arcgis/core": "^4.28.6"
+    "@arcgis/core": "^4.28.6",
+    "chart.js": "^4.4.0"
   }
 }
