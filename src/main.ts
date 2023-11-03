@@ -19,6 +19,10 @@ import SolidEdges3D from "@arcgis/core/symbols/edges/SolidEdges3D";
 import SceneLayer from "@arcgis/core/layers/SceneLayer";
 import PopupTemplate from "@arcgis/core/PopupTemplate";
 import ExpressionInfo from "@arcgis/core/form/ExpressionInfo";
+import Search from "@arcgis/core/widgets/Search";
+import Home from "@arcgis/core/widgets/Home";
+import LayerList from "@arcgis/core/widgets/LayerList";
+import Expand from "@arcgis/core/widgets/Expand";
 
 // Layers
 
@@ -272,3 +276,34 @@ streetsLayer.popupTemplate = new PopupTemplate({
     (infos) => new ExpressionInfo(infos)
   ) as __esri.popupExpressionInfoProperties[],
 });
+
+
+/**************************************************
+ * Step 7 - Find a widget in the docs to add to your app *
+ **************************************************/
+
+new Search({
+  container: "search-widget-container",
+  view: view,
+});
+
+let homeWidget = new Home({
+  view: view,
+});
+view.ui.add(homeWidget, "top-left");
+
+const layerList = new LayerList({
+  view: view,
+  listItemCreatedFunction: (event) => {
+    const item = event.item;
+    if (item.layer.type != "group") {
+      item.panel = { content: "legend", open: true };
+    }
+  },
+});
+const llExpand = new Expand({
+  view: view,
+  content: layerList,
+  expanded: false,
+});
+view.ui.add(llExpand, "top-right");
