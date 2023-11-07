@@ -15,9 +15,13 @@
     <calcite-shell class="calcite-presentation" content-behind id="shell">
       <div class="temporary-header" slot="header">
         Berlin Equal Street Names
-        <div id="search-widget-container"></div>
+        <arcgis-search position="top-right"></arcgis-search>
       </div>
-      <div id="app"></div>
+      <arcgis-scene item-id="0df79ba37c654144866188f52c47f276">
+        <arcgis-home position="top-left" />
+        <arcgis-layer-list position="top-right" expandable />
+        <arcgis-legend position="top-right" expandable />
+      </arcgis-scene>
     </calcite-shell>
     <div id="chart">
       <canvas id="chart-canvas"></canvas>
