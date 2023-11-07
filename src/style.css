@@ -7,6 +7,17 @@ body,
   width: 100%;
 }
 
+.temporary-header {
+  padding: 0.75rem;
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  background-color: var(--calcite-ui-background);
+  justify-content: space-between;
+  color:#fff;
+}
+
 #chart {
   margin-bottom: 30px;
   margin-left: 10px;

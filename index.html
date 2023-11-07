@@ -1,14 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + TS</title>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.28/@arcgis/core/assets/esri/themes/dark/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.28/@arcgis/core/assets/esri/themes/dark/main.css"
+    />
     <link rel="stylesheet" href="/src/style.css" />
   </head>
-    <div id="app"></div>
+  <body class="calcite-mode-dark">
+    <calcite-shell class="calcite-presentation" content-behind id="shell">
+      <div class="temporary-header" slot="header">
+        Berlin Equal Street Names
+        <div id="search-widget-container"></div>
+      </div>
+      <div id="app"></div>
+    </calcite-shell>
     <div id="chart">
       <canvas id="chart-canvas"></canvas>
     </div>
