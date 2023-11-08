@@ -9,5 +9,6 @@
       "allowSyntheticDefaultImports": true,
       "sourceMap": true,
       "resolveJsonModule": true
-  }
+  },
+  "include": ["./src/**/*", "./node_modules/@arcgis/core/**/*.d.ts"]
 }
